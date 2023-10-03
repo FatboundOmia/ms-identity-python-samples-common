@@ -38,7 +38,7 @@ class MsalViews:
         self.logger.debug(f"{self.prefix}{self.endpoints.redirect}: request received. will process params")
         return self.ms_identity_web.process_auth_redirect(
             redirect_uri=request.build_absolute_uri(reverse(self.endpoints.redirect)),
-            afterwards_go_to_url=reverse('index'))
+            afterwards_go_to_url=reverse('reportes_urls:menuview'))
 
     def sign_out(self, request):
         self.logger.debug(f"{self.prefix}{self.endpoints.sign_out}: signing out username: {request.identity_context_data.username}")
@@ -47,4 +47,4 @@ class MsalViews:
     def post_sign_out(self, request):
         self.logger.debug(f"{self.prefix}{self.endpoints.post_sign_out}: clearing session for username: {request.identity_context_data.username}")
         self.ms_identity_web.remove_user(request.identity_context_data.username)  # remove user auth from session on successful logout
-        return redirect(reverse('index'))                   # take us back to the home page
+        return redirect(reverse('reportes_urls:loginpage'))                   # take us back to the home page
